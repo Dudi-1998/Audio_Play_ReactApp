@@ -8,6 +8,7 @@ import "./styles.css";
 const App = () => {
   const [playlist, setPlaylist] = useState([]);
   const [currentSong, setCurrentSong] = useState(null);
+  const [currentSongIndex, setCurrentSongIndex] = useState(null);
   useEffect(() => {
     const storedPlaylist = JSON.parse(localStorage.getItem("playlist"));
     if (storedPlaylist) {
@@ -15,24 +16,6 @@ const App = () => {
     }
   }, []);
 
-  // const handleFileChange = (e) => {
-  //   const files = e.target.files;
-  //   const updatedPlaylist = [];
-
-  //   for (let i = 0; i < files.length; i++) {
-  //     const file = files[i];
-  //     const fileURL = URL.createObjectURL(file);
-
-  //     // Use the original file name
-  //     const originalFileName = file.name;
-
-  //     // Update the playlist with the original file URL and name
-  //     updatedPlaylist.push({ url: fileURL, name: originalFileName });
-  //   }
-
-  //   setPlaylist(updatedPlaylist);
-  //   localStorage.setItem("playlist", JSON.stringify(updatedPlaylist));
-  // };
   const handleFileChange = (e) => {
     const files = e.target.files;
     const newPlaylist = Array.from(files).map((file) => ({
@@ -42,19 +25,22 @@ const App = () => {
     setPlaylist(newPlaylist);
     localStorage.setItem("playlist", JSON.stringify(newPlaylist));
   };
-  const playSong = (url) => {
-    setCurrentSong(url);
+  const playSong = (index) => {
+    setCurrentSongIndex(index);
+  };
+  const handleAudioEnded = () => {
+    setCurrentSongIndex((prevIndex) => (prevIndex + 1) % playlist.length);
   };
 
   return (
     <div className="app">
       <input type="file" accept=".mp3" onChange={handleFileChange} multiple />
       <div className="multimedia">
-        <Playlist songs={playlist} onSongSelect={(url) => playSong(url)} />
-        {currentSong && (
+        <Playlist songs={playlist} onSongSelect={(index) => playSong(index)} activesong={currentSongIndex}/>
+        {currentSongIndex !== null && (
           <div className="player">
             <Visualizer />
-            <AudioPlayer currentSong={currentSong} />
+            <AudioPlayer src={playlist[currentSongIndex].url} handleAudioEnded={handleAudioEnded}/>
           </div>
         )}
       </div>

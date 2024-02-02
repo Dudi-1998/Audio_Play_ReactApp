@@ -1,8 +1,7 @@
 // AudioPlayer.js
 import React, { useState, useEffect, useRef } from "react";
 
-const AudioPlayer = ({ currentSong }) => {
-  console.log(currentSong, "sgfd");
+const AudioPlayer = ({ src, handleAudioEnded }) => {
   const [audioPlayer, setAudioPlayer] = useState(null);
   const audioPlayerRef = useRef(null);
   useEffect(() => {
@@ -12,10 +11,7 @@ const AudioPlayer = ({ currentSong }) => {
       audioPlayerRef.current.play();
     }
   }, []);
-  const handleAudioLoad = (audio) => {
-    console.log(audio);
-    setAudioPlayer(audio);
-  };
+
 
   const handleAudioTimeUpdate = () => {
     if (audioPlayerRef.current) {
@@ -27,9 +23,10 @@ const AudioPlayer = ({ currentSong }) => {
       <audio
         controls
         autoPlay
-        src={currentSong}
+        src={src}
         ref={audioPlayerRef}
         onTimeUpdate={handleAudioTimeUpdate}
+        onEnded={handleAudioEnded}
       >
         Your browser does not support the audio tag.
       </audio>
