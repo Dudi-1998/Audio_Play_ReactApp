@@ -1,0 +1,61 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.multimedia {
+  display: flex;
+  padding: 20px;
+  height: auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+}
+.playlist {
+  height: auto;
+  width: 300px;
+}
+.audio-player {
+  display: block;
+  height: auto;
+  width: 200px;
+}
+
+.App {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.visualizer {
+  display: flex;
+  align-items: flex-end;
+  width: 250px;
+  height: 200px;
+  background-color: #282c34;
+  overflow: hidden;
+}
+
+.bar {
+  width: 20px;
+  margin: 0 2px;
+  background-color: #61dafb;
+  animation: scaleUp 0.3s infinite alternate;
+}
+
+@keyframes scaleUp {
+  to {
+    height: 0;
+  }
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  padding: 10px;
+  margin: 10px;
+  white-space: nowrap;
+  height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
